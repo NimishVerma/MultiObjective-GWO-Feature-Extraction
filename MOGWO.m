@@ -63,16 +63,16 @@ nVar=data.nx;       % Number of Decision Variables
 VarSize=[1 nVar];   % Size of Decision Variables Matrix
 VarMin=0;         % Lower Bound of Variables
 VarMax=1;         % Upper Bound of Variables
-CostFunction=@(u) FeatureSelectionCost(u,nf,data); 
+CostFunction=@(u) FeatureSelectionCost(u,data); 
 % Lower bound and upper bound
 lb=zeros(1,nVar);
 ub=ones(1,nVar);
 
-VarSize=[1 nVar];1
+VarSize=[1 nVar];
 
-GreyWolves_num=20;
+GreyWolves_num=80;
 MaxIt=20;  % Maximum Number of Iterations
-Archive_size=100;   % Repository Size
+Archive_size=50;   % Repository Size
 
 alpha=0.1;  % Grid Inflation Parameter
 nGrid=10;   % Number of Grids per each Dimension
@@ -87,7 +87,7 @@ for i=1:GreyWolves_num
     GreyWolves(i).Velocity=0;
     GreyWolves(i).Position=zeros(1,nVar);
     for j=1:nVar
-        GreyWolves(i).Position(1,j)=unifrnd(lb(j),ub(j),1);
+        GreyWolves(i).Position(1,j)=randi([0 1]);
     end
     GreyWolves(i).Cost=CostFunction(GreyWolves(i).Position);
     GreyWolves(i).Best.Position=GreyWolves(i).Position;
@@ -148,7 +148,7 @@ for it=1:MaxIt
         end
         
         % Eq.(3.4) in the paper
-        c=2.*rand(1, nVar);
+         c=2.*rand(1, nVar);
         % Eq.(3.1) in the paper
         D=abs(c.*Delta.Position-GreyWolves(i).Position);
         % Eq.(3.3) in the paper
@@ -177,10 +177,10 @@ for it=1:MaxIt
         X3=Alpha.Position-A.*abs(D);
         
         % Eq.(3.11) in the paper
-        GreyWolves(i).Position=(X1+X2+X3)./3;
+        GreyWolves(i).Position=round((X1+X2+X3)./3);
         
         % Boundary checking
-        GreyWolves(i).Position=min(max(GreyWolves(i).Position,lb),ub);
+        GreyWolves(i).Position=round(min(max(GreyWolves(i).Position,lb),ub));
         
         GreyWolves(i).Cost=CostFunction(GreyWolves(i).Position);
     end

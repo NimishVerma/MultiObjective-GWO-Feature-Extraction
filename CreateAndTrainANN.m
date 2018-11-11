@@ -22,6 +22,7 @@ function results=CreateAndTrainANN(x,t)
         % Create a Fitting Network
         hiddenLayerSize = 10;
         net = fitnet(hiddenLayerSize,trainFcn);
+        net.trainParam.showWindow = false;
         % Choose Input and Output Pre/Post-Processing Functions
         % For a list of all processing functions type: help nnprocess
         net.input.processFcns = {'removeconstantrows','mapminmax'};
@@ -41,6 +42,9 @@ function results=CreateAndTrainANN(x,t)
         net.plotFcns = {};
         % net.plotFcns = {'plotperform','plottrainstate','ploterrhist', 'plotregression', 'plotfit'};
         net.trainParam.showWindow=false;
+        net.trainParam.showCommandLine = false;
+        net.trainParam.show = NaN;
+
         x = x'
         t = t'
         % Train the Network

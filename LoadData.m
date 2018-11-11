@@ -1,8 +1,8 @@
 
 function data=LoadData()
-    dataset=load('ilpd.dat');
-    data.x=dataset(:,1:end-1);
-    data.t=dataset(:,end);
+    dataset=load('spect.dat');
+    data.x=dataset(:,2:end);
+    data.t=dataset(:,1);
     
     data.nx=size(data.x,2);
     data.nt=size(data.t,2);

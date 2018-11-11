@@ -6,21 +6,23 @@
 % Project Title: Multi-Objective Feature selection using NSGA-II
 % Publisher: Yarpiz (www.yarpiz.com)
 % 
+
 % Developer: S. Mostapha Kalami Heris (Member of Yarpiz Team)
 % 
 % Contact Info: sm.kalami@gmail.com, info@yarpiz.com
 %
-function [z, out]=FeatureSelectionCost(s,nf,data)
+function [z, out]=FeatureSelectionCost(s,data)
     % Read Data Elements
     x=data.x;
     t=data.t;
     
-   [~, q]=sort(s);
-    
     % Selected Features
-    S=q(1:nf);
+    S=find(s~=0);
+
+    % Number of Selected Features
+    nf=numel(S);
     % Ratio of Selected Features
-    rf=nf/numel(q);
+    rf=nf/numel(s);
     
     % Selecting Features
     xs=x(:,S);
